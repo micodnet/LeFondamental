@@ -1,0 +1,7 @@
+﻿CREATE PROCEDURE [dbo].[GetAllPdf]
+	
+AS
+BEGIN
+	SELECT *
+	FROM PdfCourses
+END

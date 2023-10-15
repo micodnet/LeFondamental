@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Db_Fondamental</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{4ff0263a-e9fb-4e99-a426-17f5c7fab91c}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath />
+    <RootNamespace>Db_Fondamental</RootNamespace>
+    <AssemblyName>Db_Fondamental</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Procedures" />
+    <Folder Include="Procedures\SpUser" />
+    <Folder Include="Procedures\SpCourses" />
+    <Folder Include="Procedures\SpFormations" />
+    <Folder Include="Procedures\SpMessages" />
+    <Folder Include="Procedures\SpExplications" />
+    <Folder Include="Procedures\SpPdfCourses" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Users.sql" />
+    <Build Include="Tables\Courses.sql" />
+    <Build Include="Tables\PdfCourses.sql" />
+    <Build Include="Tables\Students.sql" />
+    <Build Include="Tables\Formations.sql" />
+    <Build Include="Tables\MessagesHub.sql" />
+    <Build Include="Tables\Explications.sql" />
+    <Build Include="Procedures\SpUser\GetUserById.sql" />
+    <Build Include="Procedures\SpCourses\AddCourse.sql" />
+    <Build Include="Procedures\SpCourses\DeleteCourse.sql" />
+    <Build Include="Procedures\SpCourses\GetCourseId.sql" />
+    <Build Include="Procedures\SpFormations\AddFormation.sql" />
+    <Build Include="Procedures\SpFormations\DeleteFormation.sql" />
+    <Build Include="Procedures\SpFormations\GetFormationId.sql" />
+    <Build Include="Procedures\SpMessages\DeleteMessage.sql" />
+    <Build Include="Procedures\SpMessages\GetMessageId.sql" />
+    <Build Include="Procedures\SpMessages\AddMessage.sql" />
+    <Build Include="Procedures\SpExplications\AddExplication.sql" />
+    <Build Include="Procedures\SpExplications\deleteExplication.sql" />
+    <Build Include="Procedures\SpExplications\GetExplicationId.sql" />
+    <Build Include="Procedures\SpPdfCourses\AddPdf.sql" />
+    <Build Include="Procedures\SpPdfCourses\deletePdf.sql" />
+    <Build Include="Procedures\SpPdfCourses\GetPdfId.sql" />
+    <Build Include="Procedures\SpUser\DeleteUser.sql" />
+    <Build Include="Procedures\SpUser\UpdateUser.sql" />
+    <Build Include="Procedures\SpUser\GetAllUser.sql" />
+    <Build Include="Procedures\SpPdfCourses\GetAllPdf.sql" />
+    <Build Include="Procedures\SpFormations\GetAllFormations.sql" />
+    <Build Include="Tables\Roles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Db-Fondamental.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Db-Fondamental.publish.xml" />
+  </ItemGroup>
+</Project>
