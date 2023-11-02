@@ -4,7 +4,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IUserRepository
     {
-        UserEntity LoginUser(string email, string psswd);
+        UserEntity LoginUser(string email, string psswdHash);
         void RegisterUser(string lastName, string firstName, DateTime birthDate, string nickName, string email, string psswdHash);
         UserEntity GetUserById(int id);
         IEnumerable<UserEntity> GetAllUsers();

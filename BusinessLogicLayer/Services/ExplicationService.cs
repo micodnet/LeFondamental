@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
 
         public IEnumerable<ExplicationModel> GetAll()
         {
-            return _repository.GetAll().Select(item => new ExplicationModel());
+            return _repository.GetAll().Select(item => item.DalToBll());
         }
 
         public void Update(ExplicationModel model)

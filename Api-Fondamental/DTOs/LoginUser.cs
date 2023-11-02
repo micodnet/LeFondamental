@@ -5,6 +5,7 @@ namespace Api_Fondamental.DTOs
 {
     public class LoginUser
     {
+        public int Id { get; init; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }

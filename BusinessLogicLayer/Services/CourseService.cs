@@ -36,9 +36,7 @@ namespace BusinessLogicLayer.Services
 
         public IEnumerable<CourseModel> GetAll()
         {
-            return _courseRepository.GetAll().Select(item => new CourseModel());
-            
-
+            return _courseRepository.GetAll().Select(item => item.DalToBll());
         }
 
         public void Update(CourseModel model)

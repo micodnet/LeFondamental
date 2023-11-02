@@ -19,7 +19,13 @@ namespace DataAccessLayer.Repositories
         }
         public void Add(FormationEntity entity)
         {
-            Command command = new Command("AddFormation", true);
+            Command command = new("INSERT INTO Formations (Name, Description, DateDebut, Duree, PreRequis) VALUES (@name, @description, @dateDebut, @duree, @preRequis)", false);
+            command.AddParameter("name", entity.Name);
+            command.AddParameter("description", entity.Description);
+            command.AddParameter("dateDebut", entity.DateDebut);
+            command.AddParameter("duree", entity.Duree);
+            command.AddParameter("preRequis", entity.PreRequis);
+            
             _connection.ExecuteNonQuery(command);
         }
 
@@ -39,7 +45,7 @@ namespace DataAccessLayer.Repositories
 
         public IEnumerable<FormationEntity> GetAll()
         {
-            Command command = new Command("GetAllFormations" , true);
+            Command command = new Command("SELECT * FROM Formations" , false);
             return _connection.ExecuteReader(command, er => er.DbToFormation());
         }
 

@@ -11,6 +11,7 @@ using DataAccessLayer.Interfaces;
 using DataAccessLayer.Mappers;
 using Microsoft.AspNetCore.Rewrite;
 using ToolBox;
+using BCrypt.Net;
 
 namespace DataAccessLayer.Repositories
 {
@@ -29,17 +30,18 @@ namespace DataAccessLayer.Repositories
             return _dbConnection.Query<UserEntity>(sql);
         }
 
-        public void RegisterUser(string lastName, string firstName, DateTime birthDate, string nickName, string email, string psswdHash)
+        public void RegisterUser(string lastName, string firstName, DateTime birthDate, string nickname, string email, string psswdHash)
         {
-            string passwordHash = Hash.HashPassword(psswdHash);
-            string sql = "INSERT INTO Users (LastName, FirstName, BirthDate, NickName, Email, PsswdHash)" +
+            string PasswordHash = BCrypt.Net.BCrypt.HashPassword(psswdHash);
+
+            string sql = "INSERT INTO Users (LastName, FirstName, BirthDate,  NickName, Email, PsswdHash)" +
                 " VALUES (@lastName, @firstName, @birthDate, @nickName, @email, @PasswordHash)";
-            var param = new { lastName, firstName, birthDate, nickName, email, passwordHash };
+            var param = new { lastName, firstName, birthDate, nickname, email, PasswordHash };
             _dbConnection.Execute(sql, param);
 
         }
 
-        public UserEntity LoginUser(string email, string psswd)
+        public UserEntity LoginUser(string email, string psswdHash)
         {
             try
             {
@@ -64,12 +66,12 @@ namespace DataAccessLayer.Repositories
         {
             string sql = "SELECT * FROM Users WHERE Id = @Id";
             var param = new { id };
-            return _dbConnection.QueryFirst(sql, param);
+            return _dbConnection.QueryFirst<UserEntity>(sql, param);
         }
 
         public void DeleteUser(int id)
         {
-            string sql = "DELETE FROM UsersWHERE Id = @Id";
+            string sql = "DELETE FROM Users WHERE Id = @Id";
             var param = new { id };
             _dbConnection.Execute(sql, param);
         }

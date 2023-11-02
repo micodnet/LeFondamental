@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
 
         public IEnumerable<MessageHubModel> GetAll()
         {
-            return _repository.GetAll().Select(item => new MessageHubModel());
+            return _repository.GetAll().Select(item => item.DalToBll()); 
         }
 
         public void Update(MessageHubModel model)

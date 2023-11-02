@@ -1,9 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[AddCourse]
-	@Title VARCHAR(50),
-	@Description VARCHAR(50),
-	@FormationId INT
+	@title VARCHAR(50),
+	@description VARCHAR(50),
+	@formationId INT
 AS
 BEGIN
 	INSERT INTO Courses(Title, Description, FormationId)
-	VALUES (@Title, @Description, @FormationId)
+	VALUES ('title', 'description', 'formationId')
 END

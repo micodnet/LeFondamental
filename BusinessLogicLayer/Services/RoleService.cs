@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
 
         public IEnumerable<RoleModel> GetAll()
         {
-            return _roleRepository.GetAll().Select(item => new RoleModel());
+            return _roleRepository.GetAll().Select(item => item.DalToBll());
         }
 
         public void Update(RoleModel model)

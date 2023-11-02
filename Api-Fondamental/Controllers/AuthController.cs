@@ -40,7 +40,7 @@ namespace Api_Fondamental.Controllers
                 UserModel connectedUser = _userService.LoginUser(user.Email, user.PsswdHash);
                 string MdpUser = user.PsswdHash;
                 string hashpwd = connectedUser.PsswdHash;
-                bool motDePasseValide = Hash.VerifyPassword(MdpUser, hashpwd);
+                bool motDePasseValide = BCrypt.Net.BCrypt.Verify(MdpUser, hashpwd);
 
                 if (motDePasseValide)
                 {
@@ -59,18 +59,12 @@ namespace Api_Fondamental.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(UserDto user)
+        public IActionResult Register(User user)
         {
-            if (!ModelState.IsValid)
-            {
+            
                 _userService.RegisterUser( user.LastName, user.FirstName, user.BirthDate, user.NickName, user.Email, user.PsswdHash);
-                return Ok(ModelState);
-            }
-            else
-            {
-                Console.WriteLine("l'enregistrement à échouer!");
-            }  
-            return Ok(user);
+                return Ok();
+           
         }
     }
 }

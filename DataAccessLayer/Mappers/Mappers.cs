@@ -31,7 +31,8 @@ namespace DataAccessLayer.Mappers
                 Id = (int)record["Id"],
                 NickName = (string)record["NickName"],
                 Email = (string)record["Email"],
-                PsswdHash = (string)record["PsswdHash"]
+                PsswdHash = (string)record["PsswdHash"],
+                UserId = (int)record["UserId"]
             };
         }
         internal static PdfCourseEntity DbToPdfCourse(this IDataRecord record)

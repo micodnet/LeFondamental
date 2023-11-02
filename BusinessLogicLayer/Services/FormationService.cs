@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
 
         public IEnumerable<FormationModel> GetAll()
         {
-            return _formationRepository.GetAll().Select(item => new FormationModel());
+            return _formationRepository.GetAll().Select(item => item.DalToBll());
         }
 
         public void Update(FormationModel model)

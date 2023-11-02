@@ -38,7 +38,7 @@ namespace DataAccessLayer.Repositories
 
         public MessageHubEntity Get(int id)
         {
-            Command command = new Command("CALL GetMessageId", true);
+            Command command = new Command("SELECT * FROM MessagesHub WHERE Id = @id", false);
             command.AddParameter("Id", id);
             return _connection.ExecuteReader(command, er => er.DbToMessageHub()).First();
         }

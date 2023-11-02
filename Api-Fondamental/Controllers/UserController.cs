@@ -1,8 +1,12 @@
-﻿using Api_Fondamental.Mappers;
+﻿using Api_Fondamental.DTOs;
+using Api_Fondamental.Mappers;
 using Api_Fondamental.Models;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Dapper;
+using BusinessLogicLayer.Services;
 
 namespace Api_Fondamental.Controllers
 {
@@ -29,10 +33,12 @@ namespace Api_Fondamental.Controllers
         {
             try
             {
-                UserViewModel user = _userService.GetUserById(id).ApiToBll();
+                
+                UserViewModel user = _userService.GetUserById(id).ApiToBll();        
+                
                 if (user is null) return NotFound();
-                Object userPublique = new {user.Id, user.FirstName, user.LastName };
-                return Ok(userPublique);
+                //Object userPublique = new { user.Id, user.FirstName, user.LastName };
+                return Ok(user);
             }
             catch (Exception e)
             {

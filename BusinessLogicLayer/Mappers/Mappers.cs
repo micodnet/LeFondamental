@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Models;
@@ -20,7 +21,8 @@ namespace BusinessLogicLayer.Mappers
                 BirthDate = model.BirthDate,
                 NickName = model.NickName,
                 Email = model.Email,
-                PsswdHash = model.PsswdHash
+                PsswdHash = model.PsswdHash,
+                RoleId = model.RoleId
             };
         }
         internal static UserModel DalToBll(this UserEntity entity)
@@ -33,31 +35,37 @@ namespace BusinessLogicLayer.Mappers
                 BirthDate = entity.BirthDate,
                 NickName = entity.NickName,
                 Email = entity.Email,
-                PsswdHash = entity.PsswdHash
+                PsswdHash = entity.PsswdHash,
+                RoleId = entity.RoleId
             };
         }
         internal static StudentEntity BllToDal(this StudentModel model)
         {
             return new StudentEntity()
             {
-                Email = model.Email,
+                Id = model.Id,
                 NickName = model.NickName,
+                Email = model.Email,
                 PsswdHash = model.PsswdHash,
+                UserId = model.UserId,
             };
         }
         internal static StudentModel DalToBll(this StudentEntity entity)
         {
             return new StudentModel()
             {
-                Email = entity.Email,
+                Id = entity.Id,
                 NickName = entity.NickName,
+                Email = entity.Email,
                 PsswdHash = entity.PsswdHash,
+                UserId = entity.UserId,
             };
         }
         internal static PdfCourseEntity BllToDal(this PdfCourseModel model)
         {
             return new PdfCourseEntity()
             {
+                Id = model.Id,
                 Title = model.Title,
                 Content = model.Content,
                 CourseId = model.CourseId,
@@ -67,6 +75,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new PdfCourseModel()
             {
+                Id = entity.Id,
                 Title = entity.Title,
                 Content = entity.Content,
                 CourseId = entity.CourseId,
@@ -76,6 +85,8 @@ namespace BusinessLogicLayer.Mappers
         {
             return new MessageHubEntity()
             {
+                Id = model.Id,
+                Author = model.Author,
                 Content = model.Content,
                 UserIdEnvoi = model.UserIdEnvoi,
                 UserIdRecu = model.UserIdRecu,
@@ -86,6 +97,8 @@ namespace BusinessLogicLayer.Mappers
         {
             return new MessageHubModel()
             {
+                Id = entity.Id,
+                Author = entity.Author,
                 Content = entity.Content,
                 UserIdEnvoi = entity.UserIdEnvoi,
                 UserIdRecu = entity.UserIdRecu,
@@ -96,6 +109,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new FormationEntity()
             {
+                Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
                 DateDebut = model.DateDebut,
@@ -107,6 +121,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new FormationModel()
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 DateDebut = entity.DateDebut,
@@ -118,6 +133,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new ExplicationEntity()
             {
+                Id = model.Id,
                 Content = model.Content,
                 CourseId = model.CourseId,
             };
@@ -126,6 +142,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new ExplicationModel()
             {
+                Id = entity.Id,
                 Content = entity.Content,
                 CourseId = entity.CourseId,
             };
@@ -134,6 +151,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new CourseEntity()
             {
+                Id = model.Id,
                 Title = model.Title,
                 Description = model.Description,
                 FormationId = model.FormationId,
@@ -143,6 +161,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new CourseModel()
             {
+                Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
                 FormationId = entity.FormationId,
@@ -152,6 +171,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new RoleEntity()
             {
+                Id = model.Id,
                 Label = model.Label,
             };
         }
@@ -159,6 +179,7 @@ namespace BusinessLogicLayer.Mappers
         {
             return new RoleModel()
             {
+                Id = entity.Id,
                 Label = entity.Label,
             };
         }

@@ -27,15 +27,15 @@ namespace Api_Fondamental.Controllers
             return Ok(_service.Get(Id));
         }
         [HttpPost]
-        public IActionResult Post(FormationViewModel model)
+        public IActionResult Post(FormationViewModel viewModel)
         {
             try
             {
-                _service.Add(model.ApiToBll());
+                _service.Add(viewModel.ApiToBll());
             }
             catch (Exception ex)
             {
-                if (model == null)
+                if (viewModel == null)
                 {
                     BadRequest(ex.Message);
                 }

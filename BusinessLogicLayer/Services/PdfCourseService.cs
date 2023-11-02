@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
 
         public IEnumerable<PdfCourseModel> GetAll()
         {
-            return _repository.GetAll().Select(item => new PdfCourseModel());
+            return _repository.GetAll().Select(item => item.DalToBll());
         }
 
         public void Update(PdfCourseModel model)

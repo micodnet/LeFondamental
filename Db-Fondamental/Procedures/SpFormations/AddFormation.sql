@@ -7,5 +7,5 @@
 AS
 BEGIN
     INSERT INTO Formations(Name, Description, DateDebut, Duree, PreRequis)
-    VALUES (@Name, @Description, @DateDebut, @Duree, @PreRequis)
+    VALUES ('@Name', '@Description', '@DateDebut', '@Duree', '@PreRequis')
 END;

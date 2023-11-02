@@ -4,6 +4,8 @@ namespace Api_Fondamental.Models.Form
 {
     public class LoginUserForm
     {
+
+        
         [Required]
         public string Email { get; set; }
         [Required]

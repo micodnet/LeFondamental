@@ -8,6 +8,7 @@ using BusinessLogicLayer.Mappers;
 using BusinessLogicLayer.Models;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using Dapper;
 
 namespace BusinessLogicLayer.Services
 {
@@ -23,13 +24,13 @@ namespace BusinessLogicLayer.Services
         {
             return _userRepository.GetAllUsers().Select(x => x.DalToBll());
         }
-        public void RegisterUser(string lastName, string firstName, DateTime birthDate,string nickname, string email, string psswdHash)
+        public void RegisterUser(string lastName, string firstName, DateTime birthDate, string nickname, string email, string psswdHash)
         {
             _userRepository.RegisterUser(lastName, firstName, birthDate, nickname, email, psswdHash);
         }
-        public UserModel LoginUser(string email, string psswd)
+        public UserModel LoginUser(string email, string psswdHash)
         {
-            return _userRepository.LoginUser(email, psswd).DalToBll();
+            return _userRepository.LoginUser(email, psswdHash).DalToBll();
         }
         public void SetRole(int userId, int roleId)
         {
@@ -38,7 +39,9 @@ namespace BusinessLogicLayer.Services
 
         public UserModel GetUserById(int id)
         {
-            return _userRepository.GetUserById(id).DalToBll();
+            UserModel model = _userRepository.GetUserById(id).DalToBll();
+            return model;
+           
         }
 
         public void DeleteUser(int id)

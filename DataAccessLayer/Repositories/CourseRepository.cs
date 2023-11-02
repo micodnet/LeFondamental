@@ -20,24 +20,23 @@ namespace DataAccessLayer.Repositories
 
         public void Add(CourseEntity entity)
         {
-            Command command = new Command("CALL AddCourse", true);
-            command.AddParameter("id", entity.Id);
-            command.AddParameter("Title", entity.Title);
-            command.AddParameter("Description", entity.Description);
-            command.AddParameter("FormationId", entity.FormationId);
+            Command command = new Command("INSERT INTO Courses(Title, Description, FormationId)" + "VALUES ('title', 'description', 'formationId')", false);
+            command.AddParameter("title", entity.Title);
+            command.AddParameter("description", entity.Description);
+            command.AddParameter("formationId", entity.FormationId);
             _connection.ExecuteNonQuery(command);
         }
 
         public void Delete(int id)
         {
-            Command command = new Command("CALL DeleteCourse",true); 
-            command.AddParameter("id", id);
+            Command command = new Command("DeleteCourse",true); 
+            command.AddParameter("Id", id);
             _connection.ExecuteNonQuery(command);
         }
 
         public CourseEntity Get(int id)
         {
-            Command command = new Command("CALL GetCourseId", true);
+            Command command = new Command("GetCourseId", true);
             command.AddParameter("Id", id);
             return _connection.ExecuteReader(command, er => er.DbToCourse()).First();
         }

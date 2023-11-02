@@ -4,7 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Api_Fondamental.Hubs;
 using Api_Fondamental.Infrastructure;
+using Asp.Versioning;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Models;
 using BusinessLogicLayer.Services;
@@ -67,14 +69,73 @@ internal class Program
                 ValidateAudience = false
             };
         });
+
+        //Gestion du versionning
+        //builder.Services.AddApiVersioning(opt =>
+        //{
+        //    opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+        //    opt.AssumeDefaultVersionWhenUnspecified = true;
+        //    opt.ReportApiVersions = true;
+        //    opt.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new
+        //       HeaderApiVersionReader("x-api-version"), new
+        //    MediaTypeApiVersionReader("x-api-version"));
+        //});
+        //builder.Services.AddVersionedApiExplorer(setup =>
+        //{
+        //    setup.GroupNameFormat = "'v'VVV";
+        //    setup.SubstituteApiVersionInUrl = true;
+        //});
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v2.0",
+                Title = "Fondamental",
+                Description = "Api de projet de fin de formation",
+                Contact = new OpenApiContact
+                {
+                    Name = "Fondamental 2.0",
+                    Url = new Uri("https://www.cognitic.be")
+                }
+            });
+            options.SwaggerDoc("v2", new OpenApiInfo
+            {
+                Version = "v2",
+                Title = "Fondamental 2.0",
+                Description = "Api de renvoi de donnees ",
+                Contact = new OpenApiContact
+                {
+                    Name = "Fondamental 2.0",
+                    Url = new Uri("https://www.cognitic.be")
+                }
+            });
+        });
+
+        builder.Services.AddCors(o => o.AddPolicy("myPolicy", options =>
+        options.WithOrigins("http://localhost:4200", "https://localhost:7107")
+            .AllowCredentials()));
+
+        builder.Services.AddSignalR();
+
+        builder.Services.AddSingleton<ChatHub>();
+
+
+
         var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwagger(options => options.RouteTemplate = "swagger/{documentName}/swagger.Json");
+                app.UseSwaggerUI(options =>
+                {
+                    options.DocumentTitle = "Fondamental";
+                    options.SwaggerEndpoint($"/swagger/v1/swagger.Json", $"Fondamental v1");
+                    options.SwaggerEndpoint($"/swagger/v2/swagger.Json", $"v2 en construction");
+                    
+                });
             }
+        
         app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
         app.UseHttpsRedirection();
 
@@ -83,89 +144,9 @@ internal class Program
 
         app.MapControllers();
 
+        app.MapHub<ChatHub>("chat");
+
         app.Run();
     }
 }
 
-
-//    services.AddSignalR();
-//    services.AddSingleton<TokenManager>();
-
-//    services.AddSwaggerGen(c =>
-//    {
-//        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fondamental_Api", Version = "v1" });
-//        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-//        {
-//            Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n" +
-//            "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\n" +
-//            "Example: 'Bearer 12345abcdef'",
-//            Name = "Authorization",
-//            In = ParameterLocation.Header,
-//            Type = SecuritySchemeType.ApiKey,
-//            Scheme = "Bearer"
-
-//        });
-
-//        OpenApiSecurityScheme openApiSecurityScheme = new OpenApiSecurityScheme
-//        {
-//            Reference = new OpenApiReference
-//            {
-//                Type = ReferenceType.SecurityScheme,
-//                Id = "Bearer"
-//            },
-//            Scheme = "oauth2",
-//            Name = "Bearer",
-//            In = ParameterLocation.Header
-//        };
-
-//        c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-//        {
-//            //Défini une paire de clé valeur au niveau du dictionnaire
-//            [openApiSecurityScheme] = new List<string>()
-//        });
-
-//    });
-
-//    services.AddAuthorization(options =>
-//    {
-//        options.AddPolicy("IsConnected", policy => policy.RequireAuthenticatedUser());
-//    });
-
-//    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters()
-//        {
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenManager.secret)),
-//            ValidateIssuer = true,
-//            ValidIssuer = TokenManager.myIssuer,
-//            ValidateAudience = true,
-//            ValidAudience = TokenManager.myAudience,
-//        };
-//    });
-
-//    // Singletons
-//    services.AddSingleton(sp => new Connection(Configuration.GetConnectionString("Fondamental")));
-
-//    // Repositories
-//    services.AddScoped<IUserRepository, UserRepository>();
-
-//    // Services
-//    services.AddScoped<IUserService, UserService>();
-//}
-
-//// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-//public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-//{
-//    // ajout cors permettant n'importe quel site d'accéder à l'API
-//    app.UseCors("MyPolicy");
-
-//    /*
-//    // ajout d'une origine en indiquant son nom de domaine
-//    app.UseCors(options =>
-//    {
-//        options.WithOrigins("http://http://localhost:4200").AllowAnyMethod();
-//        // options.WithOrigins("mon autre site...").AllowAnyMethod();
-//    });
-//    */
